@@ -16,16 +16,15 @@ void addRow(Line* row, char* input);
 int main()
 {
     Line* row = NULL;
-    int size=0;
+    int size=0, n;
     bool continueLoop = true;
     char* input;
 
-    while(0)
+    while(1)
     {
-        scanf("%s", input);
-        
+        scanf(" %s", input);
         //take string as input and if its only a new line then stop?
-        if(input=="\n")
+        if(strcspn(input, "\n") == 0)
         {
             break;
         }
@@ -34,6 +33,13 @@ int main()
             createRow(row, ++size);
             addRow(row+(size-1), input);
         }
+
+        #ifdef DEBUG1
+        for(n=0; n<size; n++)
+        {
+            printf("DEBUG : n=%d | %s\n", n, row[n].pos);
+        }
+        #endif
     }
 
     return 0;
