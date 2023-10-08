@@ -6,6 +6,7 @@
 
 typedef struct Lines{
     char* col;
+    int size;
 }Line;
 
 typedef struct CrssWrdPlaces{
@@ -16,12 +17,14 @@ typedef struct CrssWrdPlaces{
 
 void createRow(Line** row, int size);
 void createAvalBlank(CrssWrdPlace** avalBlank, int size);
+void createWord(char** word, int size);
 void addRow(Line* row, char* input);
 void initAval();
 
 Line* row = NULL;
 CrssWrdPlace* avalBlank = NULL;
-int lineSize=0, blankSize=0;
+char* words[STRSIZE]=NULL;
+int lineSize=0, blankSize=0, wordSize=0;
 
 int main()
 {
@@ -29,6 +32,7 @@ int main()
     bool continueLoop = true;
     char input[STRSIZE];
 
+    //get crossword board
     while(1)
     {
         fgets(input, sizeof input, stdin);
@@ -51,7 +55,31 @@ int main()
         #endif
     }
 
+    //initalize crossword pattern
     initAval();
+
+    //get words
+    while(1)
+    {
+        fgets(input, sizeof input, stdin);
+        if(input[0]=='\n')
+        {
+            break;
+        }
+        else
+        {
+            input[strcspn(input, "\n")] = 0;
+            createRow(&words, ++wordSize);
+            strcpy(words[wordSize-1],input);
+        }
+
+        #ifdef DEBUG1
+        for(n=0; n<lineSize; n++)
+        {
+            printf("DEBUG : n=%d | %s\n", n, row[n].col);
+        }
+        #endif
+    }
 
     return 0;
 }
@@ -80,10 +108,22 @@ void createAvalBlank(CrssWrdPlace** avalBlank, int size)
     }
 }
 
+void createWord(char** word, int size)
+{
+    if (*word == NULL)
+    {
+        *word = (char*)malloc(size * sizeof(char));
+    }
+    else
+    {
+        *word = (char*)realloc(*word, size * sizeof(char));
+    }
+}
+
 void addRow(Line* row, char* input)
 {
-    int strLen = strlen(input);
-    row->col = (char*)malloc(sizeof(char) * (strLen + 1));
+    row->size = strlen(input);
+    row->col = (char*)malloc(sizeof(char) * (row->size + 1));
     strcpy(row->col, input);
 }
 
