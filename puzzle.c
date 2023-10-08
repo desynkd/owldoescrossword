@@ -13,25 +13,26 @@ typedef struct Lines{
 void createRow(Line** row, int size);
 void addRow(Line* row, char* input);
 
+Line* row = NULL;
+int size=0;
+
 int main()
 {
-    Line* row = NULL;
-    int size=0, n;
+    int n;
     bool continueLoop = true;
     char input[STRSIZE];
 
     while(1)
     {
-        scanf(" %s", input);
-        //take string as input and if its only a new line then stop?
-        //use string length?
-        if(strlen(input)==0)
+        fgets(input, sizeof input, stdin);
+        if(input[0]=='\n')
         {
             break;
         }
         else
         {
-            createRow(&row, size);
+            input[strcspn(input, "\n")] = 0;
+            createRow(&row, ++size);
             addRow(row+(size-1), input);
         }
 
@@ -42,6 +43,8 @@ int main()
         }
         #endif
     }
+
+
 
     return 0;
 }
@@ -63,4 +66,9 @@ void addRow(Line* row, char* input)
     int strLen = strlen(input);
     row->col = (char*)malloc(sizeof(char) * (strLen + 1));
     strcpy(row->col, input);
+}
+
+void initAval()
+{
+    //calculate data of available spaces in struct
 }
