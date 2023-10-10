@@ -15,15 +15,20 @@ typedef struct CrssWrdPlaces{
     int aval;
 }CrssWrdPlace;
 
+typedef struct Words{
+    char* data;
+}Word;
+
 void createRow(Line** row, int size);
 void createAvalBlank(CrssWrdPlace** avalBlank, int size);
-void createWord(char** word, int size);
+void createWord(Word** input, int size);
+void addWord(Word* input, char* userInput);
 void addRow(Line* row, char* input);
 void initAval();
 
 Line* row = NULL;
 CrssWrdPlace* avalBlank = NULL;
-char* words[STRSIZE]=NULL;
+Word *inpWord;
 int lineSize=0, blankSize=0, wordSize=0;
 
 int main()
@@ -69,14 +74,14 @@ int main()
         else
         {
             input[strcspn(input, "\n")] = 0;
-            createRow(&words, ++wordSize);
-            strcpy(words[wordSize-1],input);
+            createWord(&inpWord, ++wordSize);
+            addWord(inpWord+(wordSize-1), input);
         }
 
         #ifdef DEBUG1
-        for(n=0; n<lineSize; n++)
+        for(n=0; n<wordSize; n++)
         {
-            printf("DEBUG : n=%d | %s\n", n, row[n].col);
+            printf("DEBUG : n=%d | %s\n", n, inpWord[n]);
         }
         #endif
     }
@@ -108,16 +113,22 @@ void createAvalBlank(CrssWrdPlace** avalBlank, int size)
     }
 }
 
-void createWord(char** word, int size)
+void createWord(Word** input, int size)
 {
-    if (*word == NULL)
+    if (*input == NULL)
     {
-        *word = (char*)malloc(size * sizeof(char));
+        *input = (Word*)malloc(size * sizeof(Word));
     }
     else
     {
-        *word = (char*)realloc(*word, size * sizeof(char));
+        *input = (Word*)realloc(*input, size * sizeof(Word));
     }
+}
+
+void addWord(Word* input, char* userInput)
+{
+    input->data = (char*)malloc(sizeof(char) * (strlen(userInput) + 1));
+    strcpy(input->data, userInput);
 }
 
 void addRow(Line* row, char* input)
