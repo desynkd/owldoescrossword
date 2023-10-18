@@ -19,12 +19,19 @@ typedef struct Words{
     char* data;
 }Word;
 
+/*typedef struct LetterPatterns{
+    int word;
+    int place;
+
+}LetterPattern;*/
+
 void createRow(Line** row, int size);
 void createAvalBlank(CrssWrdPlace** avalBlank, int size);
 void createWord(Word** input, int size);
 void addWord(Word* input, char* userInput);
 void addRow(Line* row, char* input);
 void initAval();
+void initLetterPattern();
 
 Line* row = NULL;
 CrssWrdPlace* avalBlank = NULL;
@@ -86,11 +93,15 @@ int main()
         #endif
     }
 
+
+
     return 0;
 }
 
 void createRow(Line** row, int size)
 {
+    //INPUT: Pointer to array of struct, Size
+    //PROCESS: Allocate required memory to global variable
     if (*row == NULL)
     {
         *row = (Line*)malloc(size * sizeof(Line));
@@ -103,6 +114,8 @@ void createRow(Line** row, int size)
 
 void createAvalBlank(CrssWrdPlace** avalBlank, int size)
 {
+    //INPUT: Pointer to array of struct, Size
+    //PROCESS: Allocate required memory to global variable
     if (*avalBlank == NULL)
     {
         *avalBlank = (CrssWrdPlace*)malloc(size * sizeof(CrssWrdPlace));
@@ -115,6 +128,8 @@ void createAvalBlank(CrssWrdPlace** avalBlank, int size)
 
 void createWord(Word** input, int size)
 {
+    //INPUT: Pointer to array of struct, Size
+    //PROCESS: Allocate required memory to global variable
     if (*input == NULL)
     {
         *input = (Word*)malloc(size * sizeof(Word));
@@ -127,12 +142,16 @@ void createWord(Word** input, int size)
 
 void addWord(Word* input, char* userInput)
 {
+    //INPUT: Pointer to struct, string
+    //PROCESS: Allocate memory and copy string to struct member
     input->data = (char*)malloc(sizeof(char) * (strlen(userInput) + 1));
     strcpy(input->data, userInput);
 }
 
 void addRow(Line* row, char* input)
 {
+    //INPUT: Pointer to struct, string
+    //PROCESS: Allocate memory and copy string to struct member, and assign size of string to other member
     row->size = strlen(input);
     row->col = (char*)malloc(sizeof(char) * (row->size + 1));
     strcpy(row->col, input);
@@ -140,7 +159,7 @@ void addRow(Line* row, char* input)
 
 void initAval()
 {
-    //calculate data of available spaces in struct
+    //PROCESS: Recognize availble places in puzzle and assign pattern numbers
     int size = blankSize;
 
     for(int n=0; n<lineSize; n++)
@@ -196,4 +215,9 @@ void initAval()
         avalBlank[n].row, avalBlank[n].col, avalBlank[n].aval);
     }
     #endif
+}
+
+void initLetterPattern()
+{
+    
 }
