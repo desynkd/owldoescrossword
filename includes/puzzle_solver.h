@@ -1,32 +1,12 @@
 #include <stdbool.h>
 
-#ifndef PUZZLE_SOLVER
-#define PUZZLE_SOLVER
+#ifndef PUZZLE_SOLVER_H
+#define PUZZLE_SOLVER_H
 
 #define STRSIZE 100
 
-typedef struct Lines{
-    char* col;
-    int size;
-}Line;
-
-typedef struct CrssWrdPlaces{
-    int row;
-    int col;
-    int aval;
-}CrssWrdPlace;
-
-typedef struct Words{
-    char* data;
-}Word;
-
-
-void createRow(Line** row, int size);
-void createAvalBlank(CrssWrdPlace** avalBlank, int size);
-void createWord(Word** input, int size);
-void addWord(Word* input, char* userInput);
-void addRow(Line* row, char* input);
-void initAval();
-void initLetterPattern();
+void updateBoard(int ***board, char* strInput, int height);
+void drawBoard(int** board, int height, int width);
+void freeBoard(int** board, int height);
 
 #endif
