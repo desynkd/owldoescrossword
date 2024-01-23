@@ -25,12 +25,14 @@ int main()
         {
             input[strcspn(input, "\n")] = 0;
             width = strlen(input);
-            updateBoard(&board, input, (++height));
+            height++;
+            updateBoard(&board, input, height);
         }
     }
 
-    drawBoard(board, height, width);
+    printf("Board Updated");
 
+    drawBoard(board, height, width);
 
     freeBoard(board, height);
     return 0;

@@ -14,16 +14,16 @@ void updateBoard(int ***board, char* strInput, int height)
     if (matrix == NULL)
     {
         // if board has not initialised
-        matrix = (int**)malloc(sizeof(int**) * 1);
-        matrix[0] = (int*)malloc(sizeof(int*) * width);
+        matrix = (int**)malloc(sizeof(int*) * 1);
+        matrix[0] = (int*)malloc(sizeof(int) * width);
         cur = 0;
     }
     else
     {
         // if initialised, resize the board as needed
-        matrix = (int**)realloc(matrix, sizeof(int**) * height);
+        matrix = (int**)realloc(matrix, sizeof(int*) * height);
         cur = height - 1;
-        matrix[cur] = (int*)malloc(sizeof(int*) * width);
+        matrix[cur] = (int*)malloc(sizeof(int) * width);
     }
 
     // manipulate values as needed in new row
